@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c "pipenv run python db_tools.py connect_db &&
+    command: bash -c "pipenv run python db_tools.py create_table &&
                       pipenv run python stock_parser.py ticker &&
                       pipenv run python stock_parser.py stock_all &&
                       pipenv run python main.py"
