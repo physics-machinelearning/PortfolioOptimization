@@ -15,7 +15,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c "pipenv run python stock_parser.py ticker &&
+    command: bash -c "pipenv run python db_tools.py connect_db &&
+                      pipenv run python stock_parser.py ticker &&
                       pipenv run python stock_parser.py stock_all &&
                       pipenv run python main.py"
     env_file:

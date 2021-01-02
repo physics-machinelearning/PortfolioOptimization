@@ -1,5 +1,6 @@
 import os
 from datetime import timedelta
+import argparse
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, asc, or_
@@ -152,3 +153,11 @@ class InteractDB:
             return price
         else:
             return
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('function_name', type=str)
+    args = parser.parse_args()
+    func_dict = {k: v for k, v in locals().items() if callable(v)}
+    ret = func_dict[args.function_name]
