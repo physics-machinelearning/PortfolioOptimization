@@ -160,4 +160,5 @@ if __name__ == '__main__':
     parser.add_argument('function_name', type=str)
     args = parser.parse_args()
     func_dict = {k: v for k, v in locals().items() if callable(v)}
-    ret = func_dict[args.function_name]
+    func = func_dict[args.function_name]
+    func()
