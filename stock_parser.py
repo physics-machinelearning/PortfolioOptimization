@@ -51,9 +51,11 @@ class StockPriceParser:
         self.session = connect_db()
 
     def insert_db(self, start, end):
+        logger.debug('StockPriceParser.insert_db')
         ts_all = self.session.query(TickerSymbol).all()
         for ts in ts_all:
             symbol = ts.name
+            logger.debug(symbol)
             try:
                 df = pdr.DataReader(
                     symbol, 'yahoo', start, end
