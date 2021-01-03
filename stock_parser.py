@@ -6,7 +6,7 @@ import pandas_datareader.data as pdr
 
 from models import StockPrice, TickerSymbol
 from db_tools import connect_db
-from config import START, START_PARSE, END
+from config import START, START_PARSE, END, logger
 
 SOURCE_DICT = {
     'NASDAQ': 'ftp://ftp.nasdaqtrader.com/symboldirectory/nasdaqlisted.txt'
@@ -54,10 +54,13 @@ class StockPriceParser:
         ts_all = self.session.query(TickerSymbol).all()
         for ts in ts_all:
             symbol = ts.name
-            df = pdr.DataReader(
-                symbol, 'yahoo', start, end
-            )
-            self._insert(symbol, df)
+            try:
+                df = pdr.DataReader(
+                    symbol, 'yahoo', start, end
+                )
+                self._insert(symbol, df)
+            except KeyError as err:
+                logger.error(err)
         self.session.close()
 
     def _insert(self, symbol, df):
