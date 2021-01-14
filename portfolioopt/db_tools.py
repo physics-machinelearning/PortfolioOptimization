@@ -103,7 +103,7 @@ class InteractDB:
             if sp.date <= START and sp.price:
                 symbols.append(ts.name)
 
-        logger('symbols={}'.format(symbols))
+        logger.info('symbols={}'.format(symbols))
         return symbols
 
     def _get_price(self, symbol, date):
