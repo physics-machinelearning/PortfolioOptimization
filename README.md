@@ -15,7 +15,7 @@
 - docker-compose run parseroneday
 
 ### データが溜まっている状態でポートフォリオ最適化のみ行いたい時
-- docker-compose run 
+- docker-compose run optimization
 
 ## 参考にしたサイト
 - https://qiita.com/matsxxx/items/0348af6ed1b1a2a2b84a
