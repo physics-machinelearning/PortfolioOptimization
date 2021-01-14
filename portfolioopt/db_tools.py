@@ -90,43 +90,6 @@ class InteractDB:
             price_list.append(price_list_temp)
         return date_list, price_list
 
-    def _get_price_list(self, symbols):
-        n_symbols = len(symbols)
-        one_day = timedelta(days=1)
-        price_list = []
-        date_list = []
-        filters =[]
-        for symbol in symbols:
-            filters.append([StockPrice.ticker_symbol==symbol])
-
-        day = START
-        while True:
-            day += one_day
-            date_list.append(day)
-            sps = self.session.query(StockPrice).\
-                filter(StockPrice.date==day).\
-                    filter(StockPrice.ticker_symbol.in_(filters)).all()
-            # sps = sps.order_by(StockPrice.ticker_symbol).all()
-            price_list_temp = [sp.price for sp in sps]
-            price_list.append(price_list_temp)
-            if day >= END:
-                break
-        
-        first_price_list = [[0]*n_symbols]
-        while True:
-            for price_list_temp in price_list:
-                for i, (first_price, price) in \
-                    enumerate(zip(first_price_list, price_list_temp)):
-                    if not first_price and price:
-                        first_price_list[i] = price
-
-                if all(first_price_list):
-                    break
-        symbols = [sp.ticker_symbol for sp in sps]
-        price_array = np.array(price_list).T
-        price_list = price_array.tolist()
-        return date_list, price_list, symbols
-
     def get_symbols(self):
         tss = self.session.query(TickerSymbol).\
             order_by(TickerSymbol.name).all()
