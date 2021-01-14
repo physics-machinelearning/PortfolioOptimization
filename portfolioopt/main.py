@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from potrfolioopt.optimization import CalcParam, cvxopt_qp_solver
-from potrfolioopt.backtest import BackTest
-from potrfolioopt.db_tools import InteractDB
-from potrfolioopt.config import logger
+from optimization import CalcParam, cvxopt_qp_solver
+from backtest import BackTest
+from db_tools import InteractDB
+from config import logger
 
 
 if __name__ == '__main__':

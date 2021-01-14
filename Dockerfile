@@ -1,6 +1,6 @@
 FROM python:3.7
 
-COPY . /code/
+COPY ./portfolioopt /code/
 
 WORKDIR /code
 

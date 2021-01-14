@@ -15,9 +15,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c "pipenv run python portfolioopt/db_tools.py create_table &&
-                      pipenv run python portfolioopt/stock_parser.py ticker &&
-                      pipenv run python portfolioopt/stock_parser.py stock_all &&
+    command: bash -c "pipenv run python db_tools.py create_table &&
+                      pipenv run python stock_parser.py ticker &&
+                      pipenv run python stock_parser.py stock_all &&
                       pipenv run python main.py"
     env_file:
       - .env
@@ -28,7 +28,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c "pipenv run python portfolioopt/stock_parser.py stock_today &&
+    command: bash -c "pipenv run python stock_parser.py stock_today &&
                       pipenv run python main.py"
     env_file:
       - .env
