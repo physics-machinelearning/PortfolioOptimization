@@ -9,7 +9,7 @@ import psycopg2
 import pandas as pd
 
 from models import Base, StockPrice, TickerSymbol
-from config import START, END
+from config import START, END, logger
 
 load_dotenv()
 
@@ -68,7 +68,6 @@ class InteractDB:
         price_list = []
         date_list = []
         for i, symbol in enumerate(symbols):
-            print(symbol)
             day = START
             price_list_temp = []
             j = 0
@@ -103,8 +102,7 @@ class InteractDB:
             if sp.date <= START and sp.price:
                 symbols.append(ts.name)
 
-        symbols = symbols[:100]
-        print('symbols=', symbols)
+        logger('symbols={}'.format(symbols))
         return symbols
 
     def _get_price(self, symbol, date):

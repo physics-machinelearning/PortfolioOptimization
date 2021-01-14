@@ -13,7 +13,7 @@ if __name__ == '__main__':
     date_list, price_list = idb.get_price_list(symbols)
     cp = CalcParam()
     mean = cp.calc_expected_r(symbols, price_list)
-    cov_df = cp._calc_cov(symbols, price_list)
+    cov_df = cp.calc_cov(symbols, price_list)
     r = mean.values
     r_e = 0.2
     cov = cov_df.values
@@ -21,15 +21,3 @@ if __name__ == '__main__':
     x_opt = np.array(sol['x'])
     logger.info('x_opt: {}'.format(x_opt))
     logger.info("Variance (x_opt): {}".format(sol["primal objective"]))
-
-    bt = BackTest(cov_df.index, x_opt.flatten())
-    logger.info('complete bt.get_price_list()')
-    portfolio_price_list = bt.get_portfolio_price_list(price_list)
-    logger.info('complete portfolio_price_list')
-
-    plt.figure()
-    for price in price_list:
-        plt.plot(date_list, price)
-
-    plt.plot(date_list, portfolio_price_list, linewidth=5)
-    plt.show()
