@@ -30,9 +30,9 @@ class BackTest:
         return date_list, price_list
 
     def _get_price(self, symbol, date):
-        instance = self.session.query(StockPrice).\
-            filter(StockPrice.date==date).\
-                filter(StockPrice.ticker_symbol==symbol).first()
+        instance = self.session.query(StockPrice)\
+            .filter(StockPrice.date == date)\
+            .filter(StockPrice.ticker_symbol == symbol).first()
         if instance:
             price = instance.price
             return price
@@ -58,7 +58,8 @@ class BackTest:
         for i, price_list_temp in enumerate(price_list):
             if i == 0:
                 portfolio_price_list =\
-                    [price * self.ratio[i] if price else 0 for price in price_list_temp]
+                    [price * self.ratio[i] if price
+                     else 0 for price in price_list_temp]
             else:
                 for j, price in enumerate(price_list_temp):
                     if price:

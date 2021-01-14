@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import Column, UniqueConstraint
 from sqlalchemy.types import Integer, String, Float, DateTime

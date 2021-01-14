@@ -3,7 +3,7 @@ from datetime import timedelta
 import argparse
 
 from dotenv import load_dotenv
-from sqlalchemy import create_engine, asc, or_
+from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import Session
 import psycopg2
 import pandas as pd
@@ -38,7 +38,8 @@ def create_table():
 
 def dropall(table_name):
     engine = create_engine('postgresql://{user}:{password}@{host}/{db}'
-                           .format(user=POSTGRES_USER, password=POSTGRES_PASSWORD,
+                           .format(user=POSTGRES_USER,
+                                   password=POSTGRES_PASSWORD,
                                    host=POSTGRES_HOST, db=POSTGRES_DB),
                            encoding='utf-8', echo=False)
     conn = engine.connect()
@@ -47,8 +48,9 @@ def dropall(table_name):
 
 def getall(table_name):
     conn = psycopg2.connect('postgresql://{user}:{password}@{host}/{db}'
-                              .format(user=POSTGRES_USER, password=POSTGRES_PASSWORD,
-                                      host=POSTGRES_HOST, db=POSTGRES_DB))
+                            .format(user=POSTGRES_USER,
+                                    password=POSTGRES_PASSWORD,
+                                    host=POSTGRES_HOST, db=POSTGRES_DB))
     cur = conn.cursor()
     cur.execute("SELECT * FROM "+table_name)
     col_name = [description[0] for description in cur.description]
@@ -74,7 +76,7 @@ class InteractDB:
             while True:
                 day += one_day
                 price = self._get_price(symbol, day)
-                if price and j==0:
+                if price and j == 0:
                     first_price = price
                     j += 1
                 price_list_temp.append(price)
@@ -83,9 +85,8 @@ class InteractDB:
                 if day >= END:
                     break
             price_list_temp =\
-                [(price-first_price)/first_price \
-                    if price else price \
-                        for price in price_list_temp]
+                [(price-first_price)/first_price if price
+                 else price for price in price_list_temp]
             price_list.append(price_list_temp)
         return date_list, price_list
 
@@ -94,9 +95,9 @@ class InteractDB:
             order_by(TickerSymbol.name).all()
         symbols = []
         for ts in tss:
-            sp = self.session.query(StockPrice).\
-                filter(StockPrice.ticker_symbol==ts.name).\
-                    order_by(asc('date')).first()
+            sp = self.session.query(StockPrice)\
+                .filter(StockPrice.ticker_symbol == ts.name)\
+                .order_by(asc('date')).first()
             if not sp:
                 continue
             if sp.date <= START and sp.price:
@@ -106,9 +107,9 @@ class InteractDB:
         return symbols
 
     def _get_price(self, symbol, date):
-        instance = self.session.query(StockPrice).\
-            filter(StockPrice.date==date).\
-                filter(StockPrice.ticker_symbol==symbol).first()
+        instance = self.session.query(StockPrice)\
+            .filter(StockPrice.date == date)\
+            .filter(StockPrice.ticker_symbol == symbol).first()
         if instance:
             price = instance.price
             return price

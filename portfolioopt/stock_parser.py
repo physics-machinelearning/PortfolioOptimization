@@ -1,4 +1,3 @@
-from datetime import datetime
 import argparse
 
 import pandas as pd
@@ -23,8 +22,8 @@ class TickerSymbolParser:
             for index, row in df.iterrows():
                 symbol = row['Symbol']
                 security_name = row['Security Name']
-                if not len(self.session.query(TickerSymbol)\
-                    .filter(TickerSymbol.name==symbol).all()):
+                if not len(self.session.query(TickerSymbol)
+                   .filter(TickerSymbol.name == symbol).all()):
                     ts = TickerSymbol(
                         market=market,
                         security_name=security_name,
@@ -75,9 +74,9 @@ class StockPriceParser:
                 price=price
             )
             already_exist = self.session.query(StockPrice)\
-                .filter(StockPrice.ticker_symbol==symbol)\
-                    .filter(StockPrice.date==date)\
-                        .filter(StockPrice.price==price).all()
+                .filter(StockPrice.ticker_symbol == symbol)\
+                .filter(StockPrice.date == date)\
+                .filter(StockPrice.price == price).all()
             if not len(already_exist):
                 self.session.add(sp)
             else:

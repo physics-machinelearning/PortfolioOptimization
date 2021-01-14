@@ -1,8 +1,6 @@
-import matplotlib.pyplot as plt
 import numpy as np
 
 from optimization import CalcParam, cvxopt_qp_solver
-from backtest import BackTest
 from db_tools import InteractDB
 from config import logger
 

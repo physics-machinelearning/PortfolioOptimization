@@ -15,6 +15,8 @@ START_PARSE = datetime.now() - timedelta(days=1)
 
 formatter = '%(levelname)s : %(asctime)s : %(message)s'
 
-logging.basicConfig(level=logging.DEBUG, format=formatter, filename='portfolioopt.log')
+logging.basicConfig(level=logging.DEBUG,
+                    format=formatter,
+                    filename='portfolioopt.log')
 
 logger = logging.getLogger(__name__)
